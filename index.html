@@ -1,0 +1,1025 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kabelo Masola | Software Engineer</title>
+  <meta name="description" content="Kabelo Masola – Software Engineer. UCT Honours graduate, Deloitte Tech Intern, backend developer specialising in microservices and AI-driven systems." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet" />
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:       #07071a;
+      --bg2:      #0d0d24;
+      --card:     rgba(255,255,255,0.03);
+      --border:   rgba(255,255,255,0.08);
+      --purple:   #7c6fff;
+      --purple2:  #a78bfa;
+      --cyan:     #00d4ff;
+      --pink:     #ff6584;
+      --gold:     #ffd700;
+      --text:     #dde3f0;
+      --muted:    #7b859a;
+      --white:    #ffffff;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--purple); border-radius: 10px; }
+
+    /* ── Keyframes ── */
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(32px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50%       { transform: translateY(-14px); }
+    }
+    @keyframes pulse-glow {
+      0%, 100% { box-shadow: 0 0 18px rgba(124,111,255,.35); }
+      50%       { box-shadow: 0 0 38px rgba(124,111,255,.7); }
+    }
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0; }
+    }
+    @keyframes grad-shift {
+      0%   { background-position: 0%   50%; }
+      50%  { background-position: 100% 50%; }
+      100% { background-position: 0%   50%; }
+    }
+    @keyframes ring-spin {
+      to { transform: rotate(360deg); }
+    }
+    @keyframes particle {
+      0%   { transform: translateY(0)   rotate(0deg); opacity: 0; }
+      10%  { opacity: 1; }
+      90%  { opacity: 1; }
+      100% { transform: translateY(-100vh) rotate(720deg); opacity: 0; }
+    }
+
+    /* ── Reveal on scroll ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(36px);
+      transition: opacity .7s ease, transform .7s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* ── Layout ── */
+    section { padding: 96px 0; }
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 28px; }
+
+    .section-eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+    .section-line {
+      width: 48px; height: 3px;
+      background: linear-gradient(90deg, var(--purple), var(--cyan));
+      border-radius: 2px;
+    }
+    .section-tag {
+      font-size: .73rem; font-weight: 700; letter-spacing: 1.5px;
+      text-transform: uppercase; color: var(--purple);
+    }
+    .section-title {
+      font-size: clamp(1.8rem, 3.5vw, 2.4rem);
+      font-weight: 900; line-height: 1.1;
+      margin-bottom: 10px;
+      background: linear-gradient(135deg, var(--white) 30%, var(--purple2) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .section-sub {
+      color: var(--muted); font-size: 1rem; margin-bottom: 52px;
+    }
+
+    /* ── Navbar ── */
+    .navbar {
+      position: fixed; top: 0; left: 0; right: 0;
+      z-index: 999; padding: 22px 0;
+      transition: all .3s ease;
+    }
+    .navbar.scrolled {
+      background: rgba(7,7,26,.94);
+      backdrop-filter: blur(22px);
+      padding: 14px 0;
+      border-bottom: 1px solid var(--border);
+      box-shadow: 0 4px 24px rgba(0,0,0,.4);
+    }
+    .nav-inner {
+      max-width: 1100px; margin: 0 auto; padding: 0 28px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-logo {
+      font-family: 'Fira Code', monospace;
+      font-size: 1.25rem; font-weight: 700;
+      text-decoration: none;
+      background: linear-gradient(135deg, var(--purple), var(--cyan));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .nav-links { display: flex; gap: 28px; list-style: none; }
+    .nav-links a {
+      color: var(--muted); text-decoration: none;
+      font-size: .88rem; font-weight: 500; letter-spacing: .4px;
+      transition: color .2s;
+    }
+    .nav-links a:hover  { color: var(--white); }
+    .nav-links a.active { color: var(--purple); }
+    .nav-hire {
+      background: linear-gradient(135deg, var(--purple), #9c94ff);
+      color: #fff !important; border-radius: 6px;
+      padding: 6px 14px !important;
+      transition: opacity .2s, transform .2s !important;
+    }
+    .nav-hire:hover { opacity: .85; transform: translateY(-1px) !important; }
+
+    /* ── Hero ── */
+    .hero {
+      min-height: 100vh;
+      display: flex; align-items: center;
+      position: relative; overflow: hidden;
+      padding: 130px 0 80px;
+    }
+    .hero-radial {
+      position: absolute; inset: 0; pointer-events: none;
+      background:
+        radial-gradient(ellipse 60% 60% at 15% 55%, rgba(124,111,255,.18) 0%, transparent 70%),
+        radial-gradient(ellipse 50% 40% at 80% 20%, rgba(0,212,255,.12) 0%, transparent 65%),
+        radial-gradient(ellipse 40% 40% at 85% 80%, rgba(255,101,132,.07) 0%, transparent 65%);
+    }
+    .hero-grid-bg {
+      position: absolute; inset: 0; pointer-events: none;
+      background-image:
+        linear-gradient(rgba(124,111,255,.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(124,111,255,.04) 1px, transparent 1px);
+      background-size: 64px 64px;
+    }
+
+    /* Floating particles */
+    .particles { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+    .particle {
+      position: absolute;
+      width: 4px; height: 4px;
+      background: var(--purple);
+      border-radius: 50%;
+      animation: particle linear infinite;
+      opacity: 0;
+    }
+
+    .hero-inner {
+      display: grid;
+      grid-template-columns: 1fr 260px;
+      gap: 56px; align-items: center;
+      position: relative; z-index: 1;
+      animation: fadeInUp .9s ease forwards;
+    }
+
+    .hero-status {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(124,111,255,.12);
+      border: 1px solid rgba(124,111,255,.3);
+      border-radius: 50px; padding: 6px 16px;
+      font-size: .78rem; font-weight: 700;
+      color: var(--purple); letter-spacing: .5px;
+      margin-bottom: 22px;
+    }
+    .status-dot {
+      width: 7px; height: 7px;
+      border-radius: 50%; background: #22c55e;
+      box-shadow: 0 0 6px #22c55e;
+    }
+
+    .hero-name {
+      font-size: clamp(3rem, 6.5vw, 5rem);
+      font-weight: 900; line-height: 1.02;
+      margin-bottom: 14px;
+      background: linear-gradient(135deg, #fff 0%, #c4b8ff 50%, #00d4ff 100%);
+      background-size: 200% 200%;
+      animation: grad-shift 5s ease infinite;
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-role {
+      font-family: 'Fira Code', monospace;
+      font-size: 1.25rem; color: var(--muted);
+      margin-bottom: 22px; min-height: 2rem;
+    }
+    .hero-role-text { color: var(--cyan); }
+    .cursor {
+      display: inline-block; width: 2px; height: 1.1em;
+      background: var(--cyan); margin-left: 1px;
+      vertical-align: text-bottom;
+      animation: blink 1s step-end infinite;
+    }
+
+    .hero-bio {
+      color: var(--muted); font-size: 1.02rem;
+      line-height: 1.85; max-width: 540px;
+      margin-bottom: 38px;
+    }
+
+    .hero-cta { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; }
+
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 12px 26px; border-radius: 8px;
+      font-weight: 600; font-size: .93rem;
+      font-family: 'Inter', sans-serif;
+      text-decoration: none; cursor: pointer;
+      border: none; transition: all .25s ease;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--purple), #a78bfa);
+      color: #fff;
+      animation: pulse-glow 3s ease-in-out infinite;
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(124,111,255,.45); }
+    .btn-outline {
+      background: transparent; color: var(--text);
+      border: 1px solid var(--border);
+    }
+    .btn-outline:hover { border-color: var(--purple); color: var(--purple); transform: translateY(-2px); }
+    .btn-ghost {
+      background: transparent; color: var(--muted);
+      padding: 12px 4px; font-size: .9rem;
+    }
+    .btn-ghost:hover { color: var(--white); }
+
+    /* Stats */
+    .stats-row {
+      display: flex; gap: 44px;
+      margin-top: 48px; padding-top: 44px;
+      border-top: 1px solid var(--border);
+    }
+    .stat-num {
+      font-size: 1.9rem; font-weight: 900;
+      background: linear-gradient(135deg, var(--purple), var(--cyan));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .stat-lbl { font-size: .75rem; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; margin-top: 2px; }
+
+    /* Avatar */
+    .avatar-wrap {
+      display: flex; justify-content: center; align-items: center;
+      position: relative;
+      animation: float 6s ease-in-out infinite;
+    }
+    .avatar-ring-outer {
+      position: absolute; inset: -24px;
+      border-radius: 50%;
+      border: 1.5px dashed rgba(124,111,255,.4);
+      animation: ring-spin 18s linear infinite;
+    }
+    .avatar-ring-inner {
+      position: absolute; inset: -12px;
+      border-radius: 50%;
+      background: conic-gradient(var(--purple), var(--cyan), var(--pink), var(--purple));
+      padding: 2px;
+      -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 2px), black calc(100% - 2px));
+      animation: ring-spin 5s linear infinite;
+    }
+    .avatar {
+      width: 220px; height: 220px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #1a1040 0%, #0d1a2e 100%);
+      border: 3px solid rgba(124,111,255,.25);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 4.2rem; font-weight: 900; color: #fff;
+      position: relative; overflow: hidden;
+      box-shadow: 0 0 60px rgba(124,111,255,.25);
+    }
+    /* To use real photo: replace the "KM" text with an <img> tag */
+    .avatar img {
+      width: 100%; height: 100%;
+      object-fit: cover; object-position: top center;
+    }
+    .avatar-badge {
+      position: absolute; bottom: -4px; right: 0;
+      background: linear-gradient(135deg, #ffd700, #ffaa00);
+      border-radius: 50px; padding: 5px 12px;
+      font-size: .68rem; font-weight: 800; color: #000;
+      border: 2px solid var(--bg); white-space: nowrap;
+    }
+
+    /* ── Skills ── */
+    #skills { background: rgba(255,255,255,.015); border-top: 1px solid rgba(255,255,255,.04); }
+    .skills-categories { display: flex; flex-direction: column; gap: 40px; }
+    .skills-cat-title {
+      font-size: .78rem; font-weight: 700; letter-spacing: 1.5px;
+      text-transform: uppercase; color: var(--purple);
+      margin-bottom: 16px;
+    }
+    .skills-row { display: flex; flex-wrap: wrap; gap: 12px; }
+    .skill-pill {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 50px; padding: 8px 18px;
+      font-size: .88rem; font-weight: 500;
+      cursor: default; transition: all .25s ease;
+    }
+    .skill-pill:hover {
+      border-color: var(--purple);
+      background: rgba(124,111,255,.1);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(124,111,255,.18);
+    }
+    .skill-emoji { font-size: 1.1rem; }
+
+    /* ── Experience ── */
+    .timeline { position: relative; padding-left: 36px; }
+    .timeline::before {
+      content: ''; position: absolute;
+      left: 10px; top: 6px; bottom: 6px; width: 2px;
+      background: linear-gradient(to bottom, var(--purple), var(--cyan));
+      border-radius: 2px;
+    }
+    .tl-item { position: relative; margin-bottom: 44px; }
+    .tl-dot {
+      position: absolute; left: -30px; top: 8px;
+      width: 14px; height: 14px;
+      border-radius: 50%;
+      background: var(--purple);
+      border: 2px solid var(--bg);
+      box-shadow: 0 0 12px var(--purple);
+    }
+    .tl-dot.current {
+      background: var(--cyan);
+      box-shadow: 0 0 12px var(--cyan);
+    }
+    .exp-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px; padding: 26px;
+      transition: border-color .3s, transform .3s;
+    }
+    .exp-card:hover { border-color: rgba(124,111,255,.35); transform: translateX(4px); }
+    .exp-head {
+      display: flex; justify-content: space-between;
+      align-items: flex-start; flex-wrap: wrap; gap: 8px;
+      margin-bottom: 4px;
+    }
+    .exp-company { font-size: 1.08rem; font-weight: 800; color: var(--white); }
+    .exp-period {
+      font-size: .8rem; color: var(--cyan);
+      font-family: 'Fira Code', monospace;
+      background: rgba(0,212,255,.09);
+      border: 1px solid rgba(0,212,255,.2);
+      border-radius: 20px; padding: 3px 12px;
+    }
+    .exp-role { color: var(--purple); font-weight: 600; font-size: .92rem; margin-bottom: 16px; }
+    .exp-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+    .exp-list li {
+      color: var(--muted); font-size: .88rem; line-height: 1.65;
+      padding-left: 18px; position: relative;
+    }
+    .exp-list li::before { content: '▸'; position: absolute; left: 0; color: var(--purple); }
+
+    /* ── Projects ── */
+    #projects { background: rgba(255,255,255,.015); border-top: 1px solid rgba(255,255,255,.04); }
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+      gap: 22px;
+    }
+    .proj-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 18px; padding: 28px;
+      position: relative; overflow: hidden;
+      transition: all .3s ease;
+    }
+    .proj-card::after {
+      content: ''; position: absolute;
+      top: 0; left: 0; right: 0; height: 3px;
+      background: linear-gradient(90deg, var(--purple), var(--cyan));
+      transform: scaleX(0); transform-origin: left;
+      transition: transform .35s ease;
+    }
+    .proj-card:hover { border-color: rgba(124,111,255,.4); transform: translateY(-7px); box-shadow: 0 20px 48px rgba(0,0,0,.45); }
+    .proj-card:hover::after { transform: scaleX(1); }
+
+    .proj-featured {
+      position: absolute; top: 16px; right: 16px;
+      background: linear-gradient(135deg, var(--purple), var(--cyan));
+      border-radius: 20px; padding: 2px 12px;
+      font-size: .68rem; font-weight: 800; color: #fff;
+    }
+    .proj-icon { font-size: 2.2rem; margin-bottom: 14px; }
+    .proj-title { font-size: 1.05rem; font-weight: 800; color: var(--white); margin-bottom: 10px; }
+    .proj-desc { color: var(--muted); font-size: .86rem; line-height: 1.72; margin-bottom: 18px; }
+    .proj-tags { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 20px; }
+    .tag {
+      font-size: .7rem; font-weight: 700;
+      font-family: 'Fira Code', monospace;
+      padding: 3px 10px; border-radius: 20px; border: 1px solid;
+    }
+    .t-purple { color: var(--purple2); border-color: rgba(167,139,250,.3); background: rgba(167,139,250,.08); }
+    .t-cyan   { color: var(--cyan);    border-color: rgba(0,212,255,.3);   background: rgba(0,212,255,.08); }
+    .t-pink   { color: var(--pink);    border-color: rgba(255,101,132,.3); background: rgba(255,101,132,.08); }
+    .t-gold   { color: var(--gold);    border-color: rgba(255,215,0,.3);   background: rgba(255,215,0,.08); }
+
+    .proj-link {
+      color: var(--purple); text-decoration: none;
+      font-size: .84rem; font-weight: 700;
+      display: inline-flex; align-items: center; gap: 6px;
+      transition: color .2s, gap .2s;
+    }
+    .proj-link:hover { color: var(--cyan); gap: 10px; }
+
+    /* ── Education ── */
+    .edu-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 18px;
+    }
+    .edu-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 16px; padding: 24px;
+      transition: all .3s ease;
+    }
+    .edu-card:hover { border-color: rgba(124,111,255,.4); transform: translateY(-4px); box-shadow: 0 10px 28px rgba(0,0,0,.35); }
+    .edu-emoji { font-size: 1.9rem; margin-bottom: 12px; }
+    .edu-inst { font-size: .72rem; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--purple); margin-bottom: 4px; }
+    .edu-deg  { font-size: .97rem; font-weight: 700; color: var(--white); line-height: 1.4; margin-bottom: 4px; }
+    .edu-yr   { font-size: .78rem; color: var(--muted); font-family: 'Fira Code', monospace; margin-bottom: 10px; }
+    .edu-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: rgba(124,111,255,.1);
+      border: 1px solid rgba(124,111,255,.22);
+      border-radius: 20px; padding: 3px 12px;
+      font-size: .76rem; font-weight: 700; color: var(--purple2);
+    }
+    .edu-card.award .edu-badge { background: rgba(255,215,0,.08); border-color: rgba(255,215,0,.25); color: var(--gold); }
+
+    /* ── Contact ── */
+    #contact { background: rgba(255,255,255,.015); border-top: 1px solid rgba(255,255,255,.04); }
+    .contact-inner { max-width: 600px; margin: 0 auto; text-align: center; }
+    .contact-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 14px; margin-top: 38px; }
+    .contact-card {
+      display: flex; align-items: center; gap: 12px;
+      padding: 14px 22px;
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 12px; text-decoration: none;
+      color: var(--text); font-size: .9rem; font-weight: 500;
+      transition: all .25s ease;
+    }
+    .contact-card:hover {
+      border-color: var(--purple); color: var(--purple);
+      transform: translateY(-3px);
+      box-shadow: 0 10px 28px rgba(124,111,255,.22);
+    }
+    .contact-icon { font-size: 1.3rem; }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 30px 0; text-align: center;
+      color: var(--muted); font-size: .84rem;
+    }
+    footer .highlight { color: var(--purple); font-weight: 600; }
+
+    /* ── Responsive ── */
+    @media (max-width: 800px) {
+      .hero-inner { grid-template-columns: 1fr; text-align: center; }
+      .avatar-wrap { order: -1; }
+      .hero-bio { margin-left: auto; margin-right: auto; }
+      .hero-cta { justify-content: center; }
+      .hero-status { margin: 0 auto 22px; }
+      .stats-row { gap: 24px; justify-content: center; }
+      .nav-links { display: none; }
+      .projects-grid { grid-template-columns: 1fr; }
+      .edu-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 480px) {
+      .edu-grid { grid-template-columns: 1fr; }
+      .stats-row { flex-wrap: wrap; gap: 20px; }
+    }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const { useState, useEffect, useRef } = React;
+
+    /* ─── DATA ─── */
+    const skillCategories = [
+      {
+        label: "Languages",
+        items: [
+          { emoji: "☕", name: "Java" },
+          { emoji: "📜", name: "JavaScript" },
+          { emoji: "🐍", name: "Python" },
+          { emoji: "🔷", name: "C#" },
+        ],
+      },
+      {
+        label: "Frameworks & Runtimes",
+        items: [
+          { emoji: "🌱", name: "Spring Boot" },
+          { emoji: "⚛️",  name: "React" },
+          { emoji: "🟢", name: "Node.js" },
+          { emoji: "🚂", name: "Express" },
+          { emoji: "📓", name: "Jupyter" },
+        ],
+      },
+      {
+        label: "Databases",
+        items: [
+          { emoji: "🍃", name: "MongoDB" },
+          { emoji: "🐘", name: "PostgreSQL" },
+          { emoji: "🗄️", name: "SQL Server" },
+          { emoji: "🔥", name: "Firebase" },
+          { emoji: "⚡", name: "Supabase" },
+        ],
+      },
+      {
+        label: "Tools & Platforms",
+        items: [
+          { emoji: "🐙", name: "GitHub" },
+          { emoji: "🔒", name: "JWT Auth" },
+          { emoji: "🔑", name: "Keycloak" },
+          { emoji: "📬", name: "Postman" },
+          { emoji: "🎨", name: "Figma" },
+          { emoji: "📊", name: "Power BI" },
+          { emoji: "🤖", name: "Gemini AI" },
+          { emoji: "🛡️", name: "Resilience4j" },
+        ],
+      },
+    ];
+
+    const experiences = [
+      {
+        company: "Deloitte Africa",
+        role: "Technology and Risk – Intern",
+        period: "Feb 2026 – Present",
+        current: true,
+        bullets: [
+          "Identifying data integrity and access-control gaps in enterprise systems while learning how control frameworks mitigate risk.",
+          "Analysing system-generated data to detect inconsistencies and developing validation approaches using SQL and analytical tools.",
+          "Building understanding of complex business processes and how ERP systems support them.",
+          "Supporting audit testing and collaborating with senior team members to resolve findings.",
+        ],
+      },
+      {
+        company: "PwC Africa",
+        role: "Vacation Work Student",
+        period: "July 2024",
+        current: false,
+        bullets: [
+          "Developed Python automation models using NumPy & Pandas to calculate monthly insurance payments.",
+          "Cleaned and prepared 2,000+ data records for machine learning model inputs.",
+          "Built and evaluated linear regression & random forest models to predict car insurance premiums — random forest outperformed baseline by 15–20%.",
+        ],
+      },
+    ];
+
+    const projects = [
+      {
+        icon: "🎓",
+        title: "Isango — Early Warning System",
+        desc: "Full-stack AI-powered student risk monitoring platform built at UCT. Uses predictive analytics and Google Gemini AI to identify at-risk students and generate personalised, data-driven intervention plans.",
+        tags: ["Node.js", "Express", "MongoDB", "JWT", "Gemini AI", "REST APIs"],
+        colors: ["t-cyan", "t-cyan", "t-purple", "t-pink", "t-purple", "t-cyan"],
+        link: "https://github.com/Mr-M81",
+        featured: true,
+      },
+      {
+        icon: "🏗️",
+        title: "Microservices Ordering System",
+        desc: "Production-grade ordering system using a microservices architecture with Inventory, Product, and Order services. Integrated API Gateway, Eureka Discovery Server, Resilience4j circuit breaker, and Keycloak auth.",
+        tags: ["Java", "Spring Boot", "Keycloak", "Resilience4j", "API Gateway"],
+        colors: ["t-pink", "t-purple", "t-cyan", "t-pink", "t-purple"],
+        link: "https://github.com/Mr-M81",
+      },
+      {
+        icon: "📊",
+        title: "Live IT Analytics Dashboard",
+        desc: "Real-time analytics dashboard to monitor IT infrastructure health of a wholesale retailer. Designed the complete UI prototype in Figma before building the live, interactive dashboard in Google Looker Studio.",
+        tags: ["Looker Studio", "Figma", "Data Analytics", "UI Design"],
+        colors: ["t-cyan", "t-purple", "t-gold", "t-pink"],
+        link: "https://github.com/Mr-M81",
+      },
+    ];
+
+    const education = [
+      {
+        emoji: "🎓", inst: "University of Cape Town",
+        deg: "BCom Honours – Information Systems",
+        yr: "Completed 2025", badge: "73% Final", type: "degree",
+      },
+      {
+        emoji: "🏅", inst: "University of Johannesburg",
+        deg: "BCom – Information Systems",
+        yr: "Completed 2024", badge: "82% — Distinction", type: "degree",
+      },
+      {
+        emoji: "⭐", inst: "University of Johannesburg",
+        deg: "UJenius Club Bursary Award",
+        yr: "2024", badge: "Top 1% · 50% Tuition Bursary", type: "award",
+      },
+      {
+        emoji: "🤖", inst: "University of Johannesburg",
+        deg: "AI in the 4th Industrial Revolution",
+        yr: "2024", badge: "Certificate", type: "cert",
+      },
+      {
+        emoji: "🔄", inst: "Scrum Alliance",
+        deg: "Scrum Fundamentals Certified",
+        yr: "2024", badge: "Certificate", type: "cert",
+      },
+    ];
+
+    /* ─── TYPING HOOK ─── */
+    function useTyping(texts, speed = 80, pause = 2200) {
+      const [display, setDisplay]   = useState("");
+      const [idx, setIdx]           = useState(0);
+      const [char, setChar]         = useState(0);
+      const [del, setDel]           = useState(false);
+      useEffect(() => {
+        const cur = texts[idx];
+        const t = setTimeout(() => {
+          if (!del) {
+            if (char < cur.length) { setDisplay(cur.slice(0, char + 1)); setChar(c => c + 1); }
+            else setTimeout(() => setDel(true), pause);
+          } else {
+            if (char > 0) { setDisplay(cur.slice(0, char - 1)); setChar(c => c - 1); }
+            else { setDel(false); setIdx(i => (i + 1) % texts.length); }
+          }
+        }, del ? 40 : speed);
+        return () => clearTimeout(t);
+      }, [char, del, idx]);
+      return display;
+    }
+
+    /* ─── REVEAL HOOK ─── */
+    function useReveal() {
+      useEffect(() => {
+        const els = document.querySelectorAll(".reveal");
+        const obs = new IntersectionObserver(
+          entries => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add("visible"); }),
+          { threshold: 0.1 }
+        );
+        els.forEach(el => obs.observe(el));
+        return () => obs.disconnect();
+      }, []);
+    }
+
+    /* ─── PARTICLES ─── */
+    function Particles() {
+      const count = 18;
+      return (
+        <div className="particles">
+          {Array.from({ length: count }).map((_, i) => (
+            <div
+              key={i}
+              className="particle"
+              style={{
+                left: `${Math.random() * 100}%`,
+                width:  `${2 + Math.random() * 4}px`,
+                height: `${2 + Math.random() * 4}px`,
+                animationDuration: `${8 + Math.random() * 14}s`,
+                animationDelay:    `${Math.random() * 10}s`,
+                background: [
+                  "var(--purple)", "var(--cyan)", "var(--pink)",
+                ][Math.floor(Math.random() * 3)],
+                opacity: 0,
+              }}
+            />
+          ))}
+        </div>
+      );
+    }
+
+    /* ─── NAVBAR ─── */
+    function Navbar({ active }) {
+      const [scrolled, setScrolled] = useState(false);
+      useEffect(() => {
+        const h = () => setScrolled(window.scrollY > 50);
+        window.addEventListener("scroll", h);
+        return () => window.removeEventListener("scroll", h);
+      }, []);
+      const links = ["about", "skills", "experience", "projects", "education", "contact"];
+      const labels = { about: "About", skills: "Skills", experience: "Experience", projects: "Projects", education: "Education", contact: "Contact" };
+      return (
+        <nav className={`navbar${scrolled ? " scrolled" : ""}`}>
+          <div className="nav-inner">
+            <a href="#about" className="nav-logo">&lt;KM /&gt;</a>
+            <ul className="nav-links">
+              {links.map(l => (
+                <li key={l}>
+                  <a href={`#${l}`} className={`${active === l ? "active" : ""} ${l === "contact" ? "nav-hire" : ""}`}>
+                    {labels[l]}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </nav>
+      );
+    }
+
+    /* ─── HERO ─── */
+    function Hero() {
+      const role = useTyping([
+        "Software Engineer",
+        "Backend Developer",
+        "Microservices Architect",
+        "AI Systems Builder",
+        "Problem Solver",
+      ]);
+      return (
+        <section className="hero" id="about">
+          <div className="hero-radial" />
+          <div className="hero-grid-bg" />
+          <Particles />
+          <div className="container">
+            <div className="hero-inner">
+              {/* Text */}
+              <div>
+                <div className="hero-status">
+                  <div className="status-dot" />
+                  Open to new opportunities
+                </div>
+                <h1 className="hero-name">Kabelo<br />Masola</h1>
+                <p className="hero-role">
+                  &gt;&nbsp;<span className="hero-role-text">{role}</span><span className="cursor" />
+                </p>
+                <p className="hero-bio">
+                  Problem-solver with a strong foundation in backend development, microservices, and
+                  AI-driven systems. UCT Honours graduate (2025). Currently a Technology &amp; Risk Intern
+                  at Deloitte Africa, building on top-1% academic foundations to create scalable,
+                  impactful software.
+                </p>
+                <div className="hero-cta">
+                  <a href="#projects" className="btn btn-primary">View My Work →</a>
+                  <a href="mailto:masolakabelo@gmail.com" className="btn btn-outline">✉ Get In Touch</a>
+                  <a href="https://github.com/Mr-M81" target="_blank" rel="noreferrer" className="btn btn-ghost">
+                    GitHub ↗
+                  </a>
+                </div>
+                <div className="stats-row">
+                  {[
+                    { n: "2",      l: "Degrees"        },
+                    { n: "Top 1%", l: "Academic Rank"  },
+                    { n: "3+",     l: "Major Projects"  },
+                    { n: "10+",    l: "Technologies"    },
+                  ].map(s => (
+                    <div key={s.l}>
+                      <div className="stat-num">{s.n}</div>
+                      <div className="stat-lbl">{s.l}</div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Avatar */}
+              <div className="avatar-wrap">
+                <div className="avatar-ring-outer" />
+                <div className="avatar-ring-inner" />
+                <div className="avatar">
+                  { <img src="/image.png" alt="Kabelo Masola" />}
+                  
+                  <div className="avatar-badge">🏆 Top 1%</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      );
+    }
+
+    /* ─── SKILLS ─── */
+    function Skills() {
+      return (
+        <section id="skills">
+          <div className="container">
+            <div className="reveal">
+              <div className="section-eyebrow">
+                <div className="section-line" />
+                <span className="section-tag">Tech Stack</span>
+              </div>
+              <h2 className="section-title">What I Work With</h2>
+              <p className="section-sub">Technologies I use to design, build, and ship software</p>
+            </div>
+            <div className="skills-categories reveal">
+              {skillCategories.map((cat, ci) => (
+                <div key={ci}>
+                  <div className="skills-cat-title">{cat.label}</div>
+                  <div className="skills-row">
+                    {cat.items.map((sk, si) => (
+                      <div key={si} className="skill-pill">
+                        <span className="skill-emoji">{sk.emoji}</span>
+                        {sk.name}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      );
+    }
+
+    /* ─── EXPERIENCE ─── */
+    function Experience() {
+      return (
+        <section id="experience">
+          <div className="container">
+            <div className="reveal">
+              <div className="section-eyebrow">
+                <div className="section-line" />
+                <span className="section-tag">Experience</span>
+              </div>
+              <h2 className="section-title">Where I've Worked</h2>
+              <p className="section-sub">Professional roles and what I delivered</p>
+            </div>
+            <div className="timeline">
+              {experiences.map((e, i) => (
+                <div key={i} className="tl-item reveal" style={{ transitionDelay: `${i * 0.12}s` }}>
+                  <div className={`tl-dot${e.current ? " current" : ""}`} />
+                  <div className="exp-card">
+                    <div className="exp-head">
+                      <div>
+                        <div className="exp-company">{e.company}</div>
+                        <div className="exp-role">{e.role}</div>
+                      </div>
+                      <div className="exp-period">{e.period}</div>
+                    </div>
+                    <ul className="exp-list">
+                      {e.bullets.map((b, j) => <li key={j}>{b}</li>)}
+                    </ul>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      );
+    }
+
+    /* ─── PROJECTS ─── */
+    function Projects() {
+      return (
+        <section id="projects">
+          <div className="container">
+            <div className="reveal">
+              <div className="section-eyebrow">
+                <div className="section-line" />
+                <span className="section-tag">Projects</span>
+              </div>
+              <h2 className="section-title">Things I've Built</h2>
+              <p className="section-sub">A selection of projects I'm proud of</p>
+            </div>
+            <div className="projects-grid">
+              {projects.map((p, i) => (
+                <div key={i} className="proj-card reveal" style={{ transitionDelay: `${i * 0.1}s` }}>
+                  {p.featured && <div className="proj-featured">⭐ Featured</div>}
+                  <div className="proj-icon">{p.icon}</div>
+                  <div className="proj-title">{p.title}</div>
+                  <div className="proj-desc">{p.desc}</div>
+                  <div className="proj-tags">
+                    {p.tags.map((t, j) => (
+                      <span key={j} className={`tag ${p.colors[j]}`}>{t}</span>
+                    ))}
+                  </div>
+                  <a href={p.link} target="_blank" rel="noreferrer" className="proj-link">
+                    View on GitHub →
+                  </a>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      );
+    }
+
+    /* ─── EDUCATION ─── */
+    function Education() {
+      return (
+        <section id="education">
+          <div className="container">
+            <div className="reveal">
+              <div className="section-eyebrow">
+                <div className="section-line" />
+                <span className="section-tag">Education &amp; Awards</span>
+              </div>
+              <h2 className="section-title">Academic Journey</h2>
+              <p className="section-sub">Degrees, distinctions, and certifications</p>
+            </div>
+            <div className="edu-grid">
+              {education.map((e, i) => (
+                <div key={i} className={`edu-card reveal ${e.type === "award" ? "award" : ""}`} style={{ transitionDelay: `${i * 0.08}s` }}>
+                  <div className="edu-emoji">{e.emoji}</div>
+                  <div className="edu-inst">{e.inst}</div>
+                  <div className="edu-deg">{e.deg}</div>
+                  <div className="edu-yr">{e.yr}</div>
+                  <span className="edu-badge">{e.badge}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      );
+    }
+
+    /* ─── CONTACT ─── */
+    function Contact() {
+      return (
+        <section id="contact">
+          <div className="container">
+            <div className="contact-inner reveal">
+              <div className="section-eyebrow" style={{ justifyContent: "center" }}>
+                <div className="section-line" />
+                <span className="section-tag">Contact</span>
+                <div className="section-line" />
+              </div>
+              <h2 className="section-title">Let's Connect</h2>
+              <p style={{ color: "var(--muted)", lineHeight: 1.85, fontSize: "1rem" }}>
+                I'm actively looking for new opportunities — whether you have a role, a project, or just
+                want to talk tech, feel free to reach out. My inbox is always open.
+              </p>
+              <div className="contact-grid">
+                <a href="mailto:masolakabelo@gmail.com" className="contact-card">
+                  <span className="contact-icon">✉️</span>
+                  masolakabelo@gmail.com
+                </a>
+                <a href="https://github.com/Mr-M81" target="_blank" rel="noreferrer" className="contact-card">
+                  <span className="contact-icon">🐙</span>
+                  GitHub / Mr-M81
+                </a>
+                <a href="tel:+27646127818" className="contact-card">
+                  <span className="contact-icon">📞</span>
+                  +27 64 612 7818
+                </a>
+              </div>
+            </div>
+          </div>
+        </section>
+      );
+    }
+
+    /* ─── APP ─── */
+    function App() {
+      const [active, setActive] = useState("about");
+      useReveal();
+
+      useEffect(() => {
+        const ids = ["about", "skills", "experience", "projects", "education", "contact"];
+        const obs = new IntersectionObserver(
+          entries => entries.forEach(e => { if (e.isIntersecting) setActive(e.target.id); }),
+          { threshold: 0.35 }
+        );
+        ids.forEach(id => { const el = document.getElementById(id); if (el) obs.observe(el); });
+        return () => obs.disconnect();
+      }, []);
+
+      return (
+        <>
+          <Navbar active={active} />
+          <Hero />
+          <Skills />
+          <Experience />
+          <Projects />
+          <Education />
+          <Contact />
+          <footer>
+            <div className="container">
+              Designed &amp; built by&nbsp;
+              <span className="highlight">Kabelo Masola</span>
+              &nbsp;·&nbsp;{new Date().getFullYear()}
+            </div>
+          </footer>
+        </>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+  </script>
+</body>
+</html>
