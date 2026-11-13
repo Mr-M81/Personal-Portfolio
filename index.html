@@ -531,12 +531,28 @@
     /* ─── DATA ─── */
     const skillCategories = [
       {
+        label: "Cloud & DevOps (AWS)",
+        items: [
+          { emoji: "⚡", name: "AWS Lambda" },
+          { emoji: "🗄️", name: "Amazon S3" },
+          { emoji: "🔥", name: "AWS Glue" },
+          { emoji: "📦", name: "DynamoDB" },
+          { emoji: "🌐", name: "API Gateway" },
+          { emoji: "🔄", name: "CodePipeline" },
+          { emoji: "🏗️", name: "CodeBuild" },
+          { emoji: "🐳", name: "Docker / ECR" },
+          { emoji: "🔑", name: "IAM" },
+          { emoji: "✨", name: "PySpark" },
+        ],
+      },
+      {
         label: "Languages",
         items: [
           { emoji: "☕", name: "Java" },
           { emoji: "📜", name: "JavaScript" },
           { emoji: "🐍", name: "Python" },
           { emoji: "🔷", name: "C#" },
+          { emoji: "🗃️", name: "SQL" },
         ],
       },
       {
@@ -601,12 +617,19 @@
 
     const projects = [
       {
+        title: "Isango — AWS Serverless Data Pipeline",
+        desc: "End-to-end serverless pipeline on AWS that ingests multi-source student data from S3, runs a PySpark ETL job on AWS Glue to classify learners as LOW/MEDIUM/HIGH risk, and exposes results via a REST API backed by Lambda and API Gateway. CI/CD automated via CodePipeline and CodeBuild. Containerised with Docker and ECR.",
+        tags: ["AWS Glue", "PySpark", "Lambda", "DynamoDB", "S3", "CodePipeline", "Docker", "ECR"],
+        colors: ["t-cyan", "t-gold", "t-purple", "t-cyan", "t-cyan", "t-pink", "t-purple", "t-cyan"],
+        link: "https://github.com/Mr-M81",
+        featured: true,
+      },
+      {
         title: "Isango — Early Warning System",
         desc: "Full-stack AI-powered student risk monitoring platform built at UCT. Uses predictive analytics and Google Gemini AI to identify at-risk students and generate personalised, data-driven intervention plans.",
         tags: ["Node.js", "Express", "MongoDB", "JWT", "Gemini AI", "REST APIs"],
         colors: ["t-cyan", "t-cyan", "t-purple", "t-pink", "t-purple", "t-cyan"],
         link: "https://github.com/Mr-M81",
-        featured: true,
       },
       {
         title: "Microservices Ordering System",
@@ -629,26 +652,37 @@
         inst: "University of Cape Town",
         deg: "BCom Honours – Information Systems",
         yr: "Completed 2025", badge: "73% Final", type: "degree",
+        emoji: "🎓",
       },
       {
         inst: "University of Johannesburg",
         deg: "BCom – Information Systems",
-        yr: "Completed 2024", badge: "82% — Distinction", type: "degree",
+        yr: "Completed 2024 — Cum Laude", badge: "82% — Distinction", type: "degree",
+        emoji: "🎓",
+      },
+      {
+        inst: "Amazon Web Services",
+        deg: "AWS Certified Developer – Associate (DVA-C02)",
+        yr: "2026", badge: "☁️ AWS Certified", type: "cert",
+        emoji: "🏅",
       },
       {
         inst: "University of Johannesburg",
         deg: "UJenius Club Bursary Award",
         yr: "2024", badge: "Top 1% · 50% Tuition Bursary", type: "award",
+        emoji: "🏆",
       },
       {
         inst: "University of Johannesburg",
         deg: "AI in the 4th Industrial Revolution",
         yr: "2024", badge: "Certificate", type: "cert",
+        emoji: "🤖",
       },
       {
         inst: "Scrum Alliance",
         deg: "Scrum Fundamentals Certified",
         yr: "2025", badge: "Certificate", type: "cert",
+        emoji: "📋",
       },
     ];
 
@@ -745,6 +779,7 @@
     function Hero() {
       const role = useTyping([
         "Software Engineer",
+        "Cloud Engineer (AWS)",
         "Backend Developer",
         "Microservices Architect",
         "AI Systems Builder",
@@ -768,10 +803,10 @@
                   &gt;&nbsp;<span className="hero-role-text">{role}</span><span className="cursor" />
                 </p>
                 <p className="hero-bio">
-                  Problem-solver with a strong foundation in backend development, microservices, and
-                  AI-driven systems. UCT Honours graduate (2025). Currently a Technology &amp; Risk Intern
-                  at Deloitte Africa, building on top-1% academic foundations to create scalable,
-                  impactful software.
+                  AWS Certified Developer (DVA-C02) and UCT Honours graduate with a strong foundation
+                  in cloud engineering, backend development, and AI-driven systems. Currently a
+                  Technology &amp; Risk Intern at Deloitte Africa, building on top-1% academic
+                  foundations to design and ship scalable, impactful software on AWS and beyond.
                 </p>
                 <div className="hero-cta">
                   <a href="#projects" className="btn btn-primary">View My Work →</a>
@@ -785,7 +820,7 @@
                     { n: "2",      l: "Degrees"        },
                     { n: "Top 1%", l: "Academic Rank"  },
                     { n: "3+",     l: "Major Projects"  },
-                    { n: "10+",    l: "Technologies"    },
+                    { n: "15+",    l: "Technologies"    },
                   ].map(s => (
                     <div key={s.l}>
                       <div className="stat-num">{s.n}</div>
@@ -933,7 +968,7 @@
             <div className="edu-grid">
               {education.map((e, i) => (
                 <div key={i} className={`edu-card reveal ${e.type === "award" ? "award" : ""}`} style={{ transitionDelay: `${i * 0.08}s` }}>
-                  <div className="edu-emoji">{e.emoji}</div>
+                  <div className="edu-emoji">{e.emoji || "📄"}</div>
                   <div className="edu-inst">{e.inst}</div>
                   <div className="edu-deg">{e.deg}</div>
                   <div className="edu-yr">{e.yr}</div>
